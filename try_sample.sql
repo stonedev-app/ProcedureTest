@@ -7,12 +7,12 @@ AS
 BEGIN
     BEGIN TRY
         PRINT 1/0;
+        RETURN 0;
     END TRY
     BEGIN CATCH
         --エラーメッセージを表示したい場合は、ERROR_MESSAGE()でエラー内容を取得可能
         --TRY CATCHで囲んでしまうとエラーメッセージが表示されなくなるので、メッセージ欄に表示したい場合は下をコメントアウトする
-        --PRINT ERROR_MESSAGE()
-        RETURN 1
-    END CATCH
-    RETURN 0
-END
+        --PRINT ERROR_MESSAGE();
+        RETURN 1;
+    END CATCH;
+END;

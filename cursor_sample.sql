@@ -11,28 +11,28 @@ BEGIN
     --PRINT N'デバッグ文字列'
 
     --変数定義
-    DECLARE @hensuu INT
-    SET @hensuu = 10
-    --PRINT @hensuu
+    DECLARE @hensuu INT;
+    SET @hensuu = 10;
+    --PRINT @hensuu;
 
     --カーソル
-    DECLARE @StudentID int, @LastName VARCHAR(50)
+    DECLARE @StudentID int, @LastName VARCHAR(50);
     --カーソルはLOCALを設定しておいた方が良さそう。設定なしだとグローバル扱い？
     --宣言だけしておいて、後でsetすることも可能。その場合は変数名の先頭に@をつける必要あり
-    DECLARE cursor_student CURSOR LOCAL FOR SELECT StudentID, LastName FROM Student
-    OPEN cursor_student
-    FETCH NEXT FROM cursor_student INTO @StudentID, @LastName
+    DECLARE cursor_student CURSOR LOCAL FOR SELECT StudentID, LastName FROM Student;
+    OPEN cursor_student;
+    FETCH NEXT FROM cursor_student INTO @StudentID, @LastName;
     WHILE @@FETCH_STATUS = 0
     BEGIN
-        PRINT CAST(@StudentID AS VARCHAR(30)) + ':' + @LastName
-        INSERT INTO StudentCopy (StudentID, LastName) VALUES (@StudentID, @LastName)
-        FETCH NEXT FROM cursor_student INTO @StudentID, @LastName
-    END
-    CLOSE cursor_student
+        PRINT CAST(@StudentID AS VARCHAR(30)) + ':' + @LastName;
+        INSERT INTO StudentCopy (StudentID, LastName) VALUES (@StudentID, @LastName);
+        FETCH NEXT FROM cursor_student INTO @StudentID, @LastName;
+    END;
+    CLOSE cursor_student;
     --SQL Serverの場合、CLOSEに加えて、DEALLOCATEが必要。割り当てを解除しないと次回実行時に定義が残ったままになる。
     --カーソルをLOCAL設定にしていない場合？
-    DEALLOCATE cursor_student
+    DEALLOCATE cursor_student;
 
     --戻り値設定可能
-    RETURN 0
-END
+    RETURN 0;
+END;
