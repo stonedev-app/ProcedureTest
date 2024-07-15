@@ -17,15 +17,17 @@ BEGIN
         END;
     END TRY
     BEGIN CATCH
-        IF @@TRANCOUNT > 0
         BEGIN
-            BEGIN TRY
-                ROLLBACK TRANSACTION;
-            END TRY
-            BEGIN CATCH
-                --ロールバックに失敗した場合は何もしない
-            END CATCH;
+            IF @@TRANCOUNT > 0
+            BEGIN
+                BEGIN TRY
+                    ROLLBACK TRANSACTION;
+                END TRY
+                BEGIN CATCH
+                    --ロールバックに失敗した場合は何もしない
+                END CATCH;
+            END;
+            RETURN 1;
         END;
-        RETURN 1;
     END CATCH;
 END;
